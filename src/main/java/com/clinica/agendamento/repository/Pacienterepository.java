@@ -8,7 +8,7 @@ import java.util.Optional;
 // Como estamos usando Spring Data JPA, não precisamos implementar os metodos, o Spring Data JPA faz isso automaticamente
 // o primeiro parametro é paciente, o segundo é o tipo da chave primaria da entidade, que no caso é Long.
 
-public interface Pacienterepository extends JpaRepository<Paciente, Long> {
+public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
     // metodo para buscar paciente por cpf, retornando um Optional<Paciente> para tratar o caso de não encontrar o paciente
     Optional<Paciente> findByCpf(String cpf);

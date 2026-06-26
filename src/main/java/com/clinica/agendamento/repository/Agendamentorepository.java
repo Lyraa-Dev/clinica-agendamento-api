@@ -11,7 +11,7 @@ import java.util.List;
 
 // Repositório de Agendamento,alem do CRUD, aqui defini as consultas que sustentam a regra de negocio proposta pelo teste 
 
-public interface Agendamentorepository extends JpaRepository<Agendamento, Long> {
+public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
     
 // Regra: um profissional não pode ter dois agendamentos no mesmo horário
 // Verifica se já existe agendamento para o profissional naquela data e hora que não esteja com o Status cancelado 
