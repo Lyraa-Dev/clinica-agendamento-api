@@ -3,6 +3,7 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+*.class
 
 ### STS ###
 .apt_generated
@@ -13,11 +14,12 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+# Arquivos de IDE - VS Code
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
 
 ### NetBeans ###
 /nbproject/private/
@@ -29,5 +31,15 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Sistema operacional
+.DS_Store
+Thumbs.db
+ 
+# Banco H2 em arquivo (se algum dia gerar)
+*.db
+*.mv.db
+*.trace.db
+ 
+# Variaveis de ambiente / segredos
+*.env
+application-local.properties

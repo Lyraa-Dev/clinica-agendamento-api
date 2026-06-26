@@ -3,7 +3,7 @@ package com.clinica.agendamento.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-//** Entidade Agendamento, representa o agendamento de um atendimento, ligando um paciente a um profissional em uma determinada data e hora */
+// Entidade Agendamento, representa o agendamento de um atendimento, ligando um paciente a um profissional em uma determinada data e hora
 
 @Entity
 @Table(name = "agendamento")
@@ -13,7 +13,8 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-// como alguns agendamentos podem pertencer ao mesmo paciente(com diferentes profissionais e/ou horarios) utilizei a relação N:1 (A mesma regra se aplica para o profissional, que pode ter vários agendamentos com diferentes pacientes e horários)
+// como alguns agendamentos podem pertencer ao mesmo paciente(com diferentes profissionais e/ou horarios) utilizei a relação N:1 
+// (A mesma regra se aplica para o profissional, que pode ter vários agendamentos com diferentes pacientes e horários)
 // fetch LAZY para evitar que o paciente seja carregado junto com o agendamento, sendo carregado apenas quando acessado
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id", nullable = false)
@@ -30,7 +31,9 @@ public class Agendamento {
 
     private String tipoAtendimento;
 
-    // Enum para representar os status de um agendamento, garantindo que apenas os valores definidos no enum possam ser utilizados como status de agendamento
+    // Enum para representar os status de um agendamento, garantindo que apenas os valores definidos no enum possam ser utilizados 
+    // como status de agendamento
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatusAgendamento status;

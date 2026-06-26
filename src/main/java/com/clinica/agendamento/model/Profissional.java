@@ -2,7 +2,7 @@ package com.clinica.agendamento.model;
 
 import jakarta.persistence.*;
 
-//** Entidade Profissional, representa o profissional de saude que realizará o antendimento */
+//Entidade Profissional, representa o profissional de saude que realizará o antendimento 
 
 @Entity
 @Table(name = "profissional")

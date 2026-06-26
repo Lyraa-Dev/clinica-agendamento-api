@@ -1,14 +1,12 @@
 package com.clinica.agendamento.model;
 
 import jakarta.persistence.*;
-/** 
- * Entidade paciente representa um paciente no sistema de agendamento da clínica
- * mapeada para a tabela "paciente" no banco de dados
- */
+//  Entidade paciente representa um paciente no sistema de agendamento da clínica mapeada para a tabela "paciente" no banco de dados
 
 @Entity
 @Table(name = "paciente")
 public class Paciente {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +21,8 @@ public class Paciente {
     private String telefone;
 
     public Paciente() {
-    
+    }
+
     public Paciente(String nome, String cpf, String telefone) {
         this.nome = nome;
         this.cpf = cpf;
