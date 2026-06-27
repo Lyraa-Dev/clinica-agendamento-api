@@ -6,6 +6,7 @@ import com.clinica.agendamento.exception.RegraNegocioException;
 import com.clinica.agendamento.model.Profissional;
 import com.clinica.agendamento.repository.ProfissionalRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
  
 import java.util.List;
@@ -23,6 +24,7 @@ public class ProfissionalService {
      // Cadastra um profissional.
      // REGRA: nao permitir dois profissionais com o mesmo registro (CRM/CRO).
      
+    @Transactional
     public ProfissionalResponseDTO cadastrar(ProfissionalRequestDTO dto) {
         if (profissionalRepository.existsByRegistro(dto.registro())) {
             throw new RegraNegocioException("Ja existe um profissional cadastrado com o registro informado");
@@ -33,6 +35,7 @@ public class ProfissionalService {
         return ProfissionalResponseDTO.fromEntity(salvo);
     }
  
+    @Transactional(readOnly = true)
     public List<ProfissionalResponseDTO> listar() {
         return profissionalRepository.findAll()
                 .stream()

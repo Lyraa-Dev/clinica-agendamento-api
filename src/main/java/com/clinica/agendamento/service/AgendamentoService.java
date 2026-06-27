@@ -12,6 +12,7 @@ import com.clinica.agendamento.repository.AgendamentoRepository;
 import com.clinica.agendamento.repository.PacienteRepository;
 import com.clinica.agendamento.repository.ProfissionalRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
  
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,9 +37,10 @@ public class AgendamentoService {
     }
  
     //Cadastra um agendamento de acordo com as regras de negocio
+    @Transactional
     public AgendamentoResponseDTO criar(AgendamentoRequestDTO dto) {
  
-        // Os IDs informados precisam existir. Se não, erro 404
+        // 1) Os IDs informados precisam existir. Se nao, erro 404 claro.
         Paciente paciente = pacienteRepository.findById(dto.pacienteId())
                 .orElseThrow(() -> new RecursoNaoEncontradoException(
                         "Paciente nao encontrado para o id " + dto.pacienteId()));
@@ -51,7 +53,8 @@ public class AgendamentoService {
         //  tambem aplicamos uma tolerancia de 1 minuto: o campo datetime-local do front
         if (dto.dataHora().isBefore(LocalDateTime.now().minusMinutes(1))) {
             throw new RegraNegocioException("Nao e possivel agendar em data/hora no passado");
- 
+        }
+
         // um profissional não pode ter dois agendamentos no mesmo horario, checamos se ja existe agendamento ATIVO 
         // StatusAgendamento diferente de CANCELADO para o mesmo profissional e horario
         boolean horarioOcupado = agendamentoRepository
@@ -74,7 +77,8 @@ public class AgendamentoService {
     }
  
     // lista os agendamentos com filtros opcionais de paciente, profissional e status
-     // qualquer combinação funciona, visto que parametros nulos são ignorados na query do repository
+    // qualquer combinação funciona, visto que parametros nulos são ignorados na query do repository
+    @Transactional(readOnly = true)
     public List<AgendamentoResponseDTO> listar(Long pacienteId, Long profissionalId,
                                                StatusAgendamento status) {
         return agendamentoRepository
@@ -84,8 +88,11 @@ public class AgendamentoService {
                 .toList();
     }
  
-    // cancelamento de agendamento, altera o status para CANCELADO, registra o motivo e mantem o registro daquele agendamento
-    // além disso impede que um agendamento que tenha o status CANCELADO seja cancelado novamente
+     // Cancelando um agendamento.
+     // muda o status para CANCELADO, registra o motivo e MANTEM o registro
+     // (nao deleta). Tambem impede cancelar algo que ja esta cancelado.
+     
+    @Transactional
     public AgendamentoResponseDTO cancelar(Long id, String motivo) {
         Agendamento agendamento = agendamentoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException(
