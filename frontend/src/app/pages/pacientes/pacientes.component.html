@@ -1,0 +1,53 @@
+<h1>Pacientes</h1>
+<p style="color: var(--cinza-600); margin-top: -0.25rem;">Cadastre e consulte os pacientes da clínica.</p>
+
+<div class="card">
+  <h3>Novo paciente</h3>
+
+  @if (erro()) { <div class="alerta alerta-erro">{{ erro() }}</div> }
+  @if (sucesso()) { <div class="alerta alerta-ok">{{ sucesso() }}</div> }
+
+  <div class="form-grid">
+    <div class="field">
+      <label>Nome</label>
+      <input [(ngModel)]="novo.nome" placeholder="Nome completo" />
+    </div>
+    <div class="field">
+      <label>CPF</label>
+      <input [(ngModel)]="novo.cpf" placeholder="Somente números (11 dígitos)" />
+    </div>
+    <div class="field">
+      <label>Telefone</label>
+      <input [(ngModel)]="novo.telefone" placeholder="(opcional)" />
+    </div>
+    <div class="field">
+      <button class="btn btn-primary" (click)="cadastrar()">Cadastrar paciente</button>
+    </div>
+  </div>
+</div>
+
+<input class="busca-tabela" [(ngModel)]="busca"
+       placeholder="Pesquisar por nome, ID ou CPF..." />
+
+<table class="tabela">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Telefone</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (p of pacientesFiltrados(); track p.id) {
+      <tr>
+        <td><span class="cod cod-paciente">C{{ p.id }}</span></td>
+        <td>{{ p.nome }}</td>
+        <td>{{ p.cpf }}</td>
+        <td>{{ p.telefone || '—' }}</td>
+      </tr>
+    } @empty {
+      <tr><td colspan="4" class="vazio">Nenhum paciente encontrado.</td></tr>
+    }
+  </tbody>
+</table>

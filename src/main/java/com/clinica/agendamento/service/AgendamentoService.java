@@ -1,5 +1,5 @@
 package com.clinica.agendamento.service;
-
+ 
 import com.clinica.agendamento.dto.AgendamentoRequestDTO;
 import com.clinica.agendamento.dto.AgendamentoResponseDTO;
 import com.clinica.agendamento.exception.RecursoNaoEncontradoException;
@@ -47,10 +47,10 @@ public class AgendamentoService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException(
                         "Profissional nao encontrado para o id " + dto.profissionalId()));
  
-        // não permitir agendamento no passado A anotacao @Future no DTO ja barra a maioria dos casos, mas ainda assim validei aqui tambem
-        if (dto.dataHora().isBefore(LocalDateTime.now())) {
+        // não permitir agendamento no passado A anotacao @Future no DTO ja barra a maioria dos casos, mas ainda assim validei aqui
+        //  tambem aplicamos uma tolerancia de 1 minuto: o campo datetime-local do front
+        if (dto.dataHora().isBefore(LocalDateTime.now().minusMinutes(1))) {
             throw new RegraNegocioException("Nao e possivel agendar em data/hora no passado");
-        }
  
         // um profissional não pode ter dois agendamentos no mesmo horario, checamos se ja existe agendamento ATIVO 
         // StatusAgendamento diferente de CANCELADO para o mesmo profissional e horario
