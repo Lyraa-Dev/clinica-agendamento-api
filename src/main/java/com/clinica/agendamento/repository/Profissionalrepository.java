@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProfissionalRepository extends JpaRepository<Profissional, Long> {
     
+    // metodo para validar a duplicidade de registro no cadastro do profissional através do registro (CRM etc)
+    boolean existsByRegistro(String registro);
 }
