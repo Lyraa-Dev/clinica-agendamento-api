@@ -46,6 +46,8 @@ Foquei primeiro em entregar tudo que era obrigatório, bem feito: os cinco endpo
 
 - **Paciente em dois lugares ao mesmo tempo.** Reparei que hoje um paciente consegue marcar duas consultas no mesmo horário com médicos diferentes. Dava pra resolver fácil, espelhando a regra que já tenho pro profissional, mas como também está fora do que o enunciado pede, deixei anotado como melhoria.
 
+- **Status "Realizado" não implementado.** O enum de status prevê o estado REALIZADO (a consulta de fato ter acontecido), mas não implementei a transição para ele um agendamento hoje vai de AGENDADO para CANCELADO (pensei em adicionar uma opção de concluir atendimento). Decidi manter o estado previsto no modelo, pensando no ciclo de vida completo, mas a marcação de consulta realizada ficou fora do escopo desta entrega.
+
 - **Padronização de dados de entrada.** A especialidade é texto livre, então variações de digitação ("Cardiologia" vs "cardiologia") criam duplicatas, o ideal seria um enum ou tabela de especialidades. O registro (CRM) também aceita formato livre, sem máscara ou validação de padrão. Decidi deixar ambos como estão para não expandir, mas são pontos claros de evolução para garantir consistência.
 
 - **Autenticação e paginação.** Não foram pedidas. Num sistema real eu colocaria a busca da interface, por exemplo, é feita no front e, com muito dado, eu migraria pra uma busca paginada no servidor.
